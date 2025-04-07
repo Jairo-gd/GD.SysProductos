@@ -25,16 +25,11 @@ builder.Services.AddScoped<UsuarioDAL>();
 builder.Services.AddScoped<UsuarioBL>();
 builder.Services.AddScoped<CompraDAL>();
 builder.Services.AddScoped<CompraBL>();
+builder.Services.AddScoped<VentaDAL>();
+builder.Services.AddScoped<VentaBL>();
+builder.Services.AddScoped<ClienteDAL>();
+builder.Services.AddScoped<ClienteBL>();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/Usuario/Login"; // Ruta de inicio de sesión
-        options.LogoutPath = "/Usuario/Logout"; // Ruta de cierre de sesión
-        options.AccessDeniedPath = "/Usuario/Login"; // Opcional (Ruta de acceso denegado)
-        options.ExpireTimeSpan = TimeSpan.FromHours(1); //definir tiempo de la sesión
-        options.SlidingExpiration = true; //extender automáticamente la expiración de la sesión del usuario mientras continue activo.
-    });
 builder.Services.AddControllersWithViews();
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 var app = builder.Build();

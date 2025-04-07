@@ -20,7 +20,7 @@
                         <option value="">Seleccione un proveedor</option>
                         @foreach (var item in ViewBag.Proveedores)
                         {
-                            <option value="@item.Value">@item.Text</option>
+                                <option value="@item.Value">@item.Text</option>
                         }
                     </select>
                 </div>
@@ -35,7 +35,7 @@
                                 <option value="">Seleccione un producto</option>
                                 @foreach (var p in productos)
                                 {
-                                    <option value="@p.Id" data-precio="@p.Precio" data-stock="@p.CantidadDisponible">@p.Nombre</option>
+                                        <option value="@p.Id" data-precio="@p.Precio" data-stock="@p.CantidadDisponible">@p.Nombre</option>
                                 }
                             </select>
                         </div>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
 
-                <!-- TABLA DETALLE DE COMPRA -->
+                <!-- TABLA DETALLE DE COMPRA-->
                 <div class="mt-4">
                     <h5 class="fw-bold"> Detalles de Compra</h5>
                     <table class="table table-bordered table-striped">
@@ -100,68 +100,68 @@
 </div>
 
 @section Scripts {
-    <script>
-        let index = 0;
+        <script>
+            let index = 0;
 
-        document.getElementById("productoSeleccionado").addEventListener("change", function () {
-            let selectedOption = this.selectedOptions[0];
-            document.getElementById("precioSeleccionado").value = selectedOption.dataset.precio || 0;
-            document.getElementById("stockSeleccionado").value = selectedOption.dataset.stock || 0;
-            calcularSubtotalSeleccionado();
-        });
-
-        document.getElementById("cantidadSeleccionada").addEventListener("input", calcularSubtotalSeleccionado);
-
-        function calcularSubtotalSeleccionado() {
-            let cantidad = document.getElementById("cantidadSeleccionada").value || 0;
-            let precio = document.getElementById("precioSeleccionado").value || 0;
-            let subtotal = cantidad * precio;
-            document.getElementById("subtotalSeleccionado").value = subtotal.toFixed(2);
-        }
-
-        document.getElementById("agregarProducto").addEventListener("click", function () {
-            let selectProducto = document.getElementById("productoSeleccionado");
-            let idProducto = selectProducto.value;
-            let nombreProducto = selectProducto.selectedOptions[0].text;
-            let cantidad = document.getElementById("cantidadSeleccionada").value;
-            let precio = document.getElementById("precioSeleccionado").value;
-            let subtotal = document.getElementById("subtotalSeleccionado").value;
-
-            if (!idProducto || cantidad <= 0 || precio <= 0) {
-                alert("Seleccione un producto y verifique los valores.");
-                return;
-            }
-
-            let tbody = document.querySelector("#tablaProductos");
-            let tr = document.createElement("tr");
-
-            tr.innerHTML = `
-                        <td>${nombreProducto}<input type="hidden" name="DetalleCompras[${index}].IdProducto" value="${idProducto}"></td>
-                        <td class="text-center"><input type="number" name="DetalleCompras[${index}].Cantidad" class="form-control cantidad text-center" min="1" value="${cantidad}"></td>
-                        <td class="text-end"><input type="text" name="DetalleCompras[${index}].PrecioUnitario" class="form-control precio text-end" value="${precio}"></td>
-                        <td class="text-end"><input type="text" name="DetalleCompras[${index}].SubTotal" class="form-control subtotal text-end fw-bold" value="${subtotal}" readonly></td>
-                        <td class="text-center"><button type="button" class="btn btn-danger btnEliminar">X</button></td>
-            `;
-
-            tbody.appendChild(tr);
-            index++;
-            calcularTotal();
-        });
-
-        document.addEventListener("click", function (event) {
-            if (event.target.classList.contains("btnEliminar")) {
-                event.target.closest("tr").remove();
-                calcularTotal();
-            }
-        });
-
-        function calcularTotal() {
-            let total = 0;
-            document.querySelectorAll(".subtotal").forEach(sub => {
-                total += parseFloat(sub.value) || 0;
+            document.getElementById("productoSeleccionado").addEventListener("change", function () {
+                let selectedOption = this.selectedOptions[0];
+                document.getElementById("precioSeleccionado").value = selectedOption.dataset.precio || 0;
+                document.getElementById("stockSeleccionado").value = selectedOption.dataset.stock || 0;
+                calcularSubtotalSeleccionado();
             });
-            document.getElementById("total").value = total.toFixed(2);
-        }
-    </script>
+
+            document.getElementById("cantidadSeleccionada").addEventListener("input", calcularSubtotalSeleccionado);
+
+            function calcularSubtotalSeleccionado() {
+                let cantidad = document.getElementById("cantidadSeleccionada").value || 0;
+                let precio = document.getElementById("precioSeleccionado").value || 0;
+                let subtotal = cantidad * precio;
+                document.getElementById("subtotalSeleccionado").value = subtotal.toFixed(2);
+            }
+
+            document.getElementById("agregarProducto").addEventListener("click", function () {
+                let selectProducto = document.getElementById("productoSeleccionado");
+                let idProducto = selectProducto.value;
+                let nombreProducto = selectProducto.selectedOptions[0].text;
+                let cantidad = document.getElementById("cantidadSeleccionada").value;
+                let precio = document.getElementById("precioSeleccionado").value;
+                let subtotal = document.getElementById("subtotalSeleccionado").value;
+
+                if (!idProducto || cantidad <= 0 || precio <= 0) {
+                    alert("Seleccione un producto y verifique los valores.");
+                    return;
+                }
+
+                let tbody = document.querySelector("#tablaProductos");
+                let tr = document.createElement("tr");
+
+                tr.innerHTML = `
+                            <td>${nombreProducto}<input type="hidden" name="DetalleCompras[${index}].IdProducto" value="${idProducto}"></td>
+                            <td class="text-center"><input type="number" name="DetalleCompras[${index}].Cantidad" class="form-control cantidad text-center" min="1" value="${cantidad}"></td>
+                            <td class="text-end"><input type="text" name="DetalleCompras[${index}].PrecioUnitario" class="form-control precio text-end" value="${precio}"></td>
+                            <td class="text-end"><input type="text" name="DetalleCompras[${index}].SubTotal" class="form-control subtotal text-end fw-bold" value="${subtotal}" readonly></td>
+                            <td class="text-center"><button type="button" class="btn btn-danger btnEliminar">X</button></td>
+                `;
+
+                tbody.appendChild(tr);
+                index++;
+                calcularTotal();
+            });
+
+            document.addEventListener("click", function (event) {
+                if (event.target.classList.contains("btnEliminar")) {
+                    event.target.closest("tr").remove();
+                    calcularTotal();
+                }
+            });
+
+            function calcularTotal() {
+                let total = 0;
+                document.querySelectorAll(".subtotal").forEach(sub => {
+                    total += parseFloat(sub.value) || 0;
+                });
+                document.getElementById("total").value = total.toFixed(2);
+            }
+        </script>
 
 }

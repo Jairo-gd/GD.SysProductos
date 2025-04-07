@@ -33,7 +33,7 @@ namespace GD.SysProductos.DAL
                         producto.CantidadDisponible += detalle.Cantidad;
                     }
                 }
-            }              
+            }
             return await dbContext.SaveChangesAsync();
         }
         public async Task<int> AnularAsync(int idCompra)
@@ -56,8 +56,8 @@ namespace GD.SysProductos.DAL
                         producto.CantidadDisponible -= detalle.Cantidad;
                     }
 
-                       
-                }                 
+
+                }
                 return await dbContext.SaveChangesAsync();
             }
             return 0; // Si ya estaba anulada, no hacer nada
@@ -93,7 +93,7 @@ namespace GD.SysProductos.DAL
             var compras = await comprasQuery.ToListAsync();
 
             return compras ?? new List<Compra>();
-        } 
+        }
         public async Task<List<Compra>> ObtenerReporteComprasAsync(CompraFiltros filtro)
         {
             var comprasQuery = dbContext.Compras
@@ -118,3 +118,4 @@ namespace GD.SysProductos.DAL
         }
     }
 }
+
